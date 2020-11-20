@@ -1,0 +1,17 @@
+1. What components are part of the Von Neuman Architecture
+- CPU with control unit and logic unit, Memory Unit, input and output device
+
+2. What is user space?
+- User space are every code that runs outside of the operative system's kernel. 
+  In other words applications that can be removed without harming the computer or the operative system
+
+3. What is the shell?
+- Shell is a powerful tool that can be used to manipulate data and excecute applications under several conitions.
+  Windows have cmd and powershell as example and both of them are command line based wich means the user need to 
+  type specific commands in order to do the different tasks
+
+4. Where is the shell located?
+- the shell is located at the user space
+
+5. What is the main task of the shell?
+-  the main task of the shell is to manipulate data and excecute programs
