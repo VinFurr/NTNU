@@ -1,0 +1,179 @@
+Section II – UNIX, Scripting
+
+6. What is the octal representation of a file that can be read and written only by its owner?
+- 0110 000 000 at binary numbers should be equal to 6 0 0 for octal number
+
+7. In UNIX systems, what is the common name of the special user that can access and modify every file?
+- i believe the name is User/group owner
+
+8. Which file permission classes are available in UNIX systems?
+- user/group owner, group, others
+
+9. As of 2020, which percentage of servers have UNIX-like OS?
+- above 70%
+
+10. The command ssh will:
+- Secure Shell (SSH) is a network protocol. It will porovide a secure encrypted connection between two computers. 
+  For example a connection between a client(PC) and a host(server). 
+
+11. UNIX Command: access your current working directory
+- ssh (username)@login.(student or empolyee).ntnu.no
+- for me the command will be "ssh hdsun@login.stud.ntnu.no" and the next step is to type my password. 
+
+- heard someone in the class said it was pwd, but pwd only prints the current working directory and not gaining access to it?
+
+12. UNIX Command: rename files (give an example)
+- i got a file named file1.txt and want to rename it to vincent.txt in the same directory
+- the command will be "mv file1.txt vincent.txt"
+- the mv command can also be used to move files to other directories
+
+13. UNIX Command: schedule the execution of programs in the future
+- using cronjob to schedule execution of a program in lass than one year in the future (because it can not specify year)
+  lets say todays date is 16 nov 2020 and i want to execute shell script called exec7feb.sh in 7th february 2021 12:30:
+  30 12 7 2 * [path to the shell script]exec7feb.sh
+   
+14. UNIX Command: Forcefully shutdown the command with process ID 123
+- kill 123
+- if this does not work, then try kill -9 123
+
+
+15. UNIX Command: access your root user
+- sudo -s
+
+16. Crontab scheduled: At minute 30 on Sunday.
+- 30 * * * 0
+
+17. Crontab scheduled: At minute 30 on day-of-month 15.
+- 30 * 15 * *
+
+18. Crontab scheduled: At 05:30 on every day-of-week from Sunday through Monday in June.
+- 30 5 * 6 0-1
+
+19. Script: print your name and date
+- echo "Vincent $(date)"
+
+20. Script: add two numeric values, print the result
+- #!/bin/bash
+  read -p "Enter your first number: " number1
+  read -p "Enter your second number: " number2
+  sum=$(($number1 + $number2))
+  echo "the sum is $sum"
+
+21. Script: inputs username, prints “USERNAME stored”
+- #!/bin/bash
+  read -p "type your username: " USERNAME
+  echo "$USERNAME stored"
+
+22. Script: Store the output of the command “hostname” in a variable. Display “This script is
+running on _.” where “_” is the output of the “hostname” command.
+- OUTPUT="$(hostname)"
+  echo "This script is running on $OUTPUT"
+
+23. Script: Store the output of the working directory (from where the script is run) in a variable
+then print the variable.
+- OUTPUT="$(dir)"
+  echo "This script is running on $OUTPUT"
+
+24. Create a step by step tutorial on how to create a cronjob that prints “Task scheduled at” +
+DATE. Cronjob is scheduled every 30 minutes on today’s date (only today).
+- (assumes that you already have downloaded ubuntu and are in the root)
+
+  1. Type and enter: 
+     crontab -e
+
+  2. Navigate to the bottom.
+
+  3. Check the date for today.
+
+  4. Type:
+     0,30 * [day] [month] *
+     where you change [day] and [month] to the number that corresponds to todays date. 
+     Example: todays date is 16th november, the day=16 and month=11. Then you would have to type "0,30 * 16 11 *"  
+     if you are still unsure if this is right, to to https://crontab.guru to see what the numbers means
+
+  5. On the same line, type: 
+     echo "Task scheduled at $(date)"
+
+     this is basically whats needed, but it is not specified where it should print shis text.
+   
+  6. to print it in a text, type:
+     >> /home/[USERNAME]/[filename].txt
+     just change [USERNAME] with your username and [filename]with the name you want to give it. 
+     Example: my username is "vinfurr" and i name my .txt file to print. so i should type:
+     >> /home/vinfurr/print.txt     
+     
+     So far the example code line looks like this:
+     0,30 * 16 11 * echo "Task scheduled at $(date)" >> /home/vinfurr/print.txt
+
+     Note: if you want the .txt file to be in another location, you can do that too. 
+     Just specify the path for where you want the .txt file to be
+
+  7. Press Ctrl and O on the keyboard, save and then press Ctrl and X to exit
+
+  8. Create the .txt file in the same path that you specified in the crontab:
+     nano [filename].txt
+  
+  9. Press Ctrl and O on the keyboard, save and then press Ctrl and X to exit
+
+ 10. Type and enter:
+     service cron status
+
+     if it says the cron is not running, then enter this command:
+     service cron start
+     and the the .txt file will be written at every minute 0 and 30 during that day.
+
+     if you wish to stop the job, then enter this command and you are done:
+     service cron stop
+
+ 11. If you want to read the .txt file, enter this command:
+     cat [filename].txt
+
+     Remember to change [filename] with the name you have chosen for the .txt file
+
+
+25. Create a script that takes an input (letter or number) that will display the answer of a question.
+The script should when started list a menu for the user with the different questions that can be
+chosen and which corresponding letter the user will have to give as input to display the answer of
+the desired question. One of the possible inputs the user should be able to make is "q" for quitting
+the script. The menu should also have a default case where all the items is displayed again, or no
+changes is made if the user gives an invalid input. Hint: use a switch case to be able to handle the
+menu. Each option in the menu should lead to an echo of the answer
+
+#!/bin/bash
+QUIT=no
+ANSWER=""
+while [ "$QUIT" != "yes" ]
+do
+	echo "1. the answer of 1+2"
+	echo "2. the answer of 1+4"
+	echo "3. the answer of 1+9"
+	echo ""
+	echo "which question do you want the answer of? (1, 2 or 3)"
+	echo 'you can also enter "q" to quit'
+	read ANSWER
+	case $ANSWER in
+		1)
+		echo "the answer of question 1 is 3"
+		sleep 3
+		;;
+		2)
+		echo "the answer of question 2 is 5"
+		sleep 3
+		;;
+		3)
+		echo "the answer of question 3 is 10"
+		sleep 3
+		;;
+		q)
+		echo "quitting in 3 seconds"
+		sleep 1
+		echo "quitting in 2 seconds"
+		sleep 1
+		echo "quitting in 1 seconds"
+		sleep 1
+		QUIT=yes
+		*)
+		echo "invalid input"
+	esac
+done
+		;;
